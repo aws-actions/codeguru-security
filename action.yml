@@ -1,0 +1,31 @@
+name: 'CodeGuru Security'
+description: 'AWS CodeGuru Security Action'
+branding:
+  icon: 'cloud'
+  color: 'orange'
+inputs:
+  source_path:
+    description: 'Path to source repository'
+    default: .
+    required: false
+  aws_region:
+    description: 'AWS region where you want to run workflow'
+    required: true
+  fail_on_severity:
+    description: 'Fails the action run if any finding is higher than or equal to severity is identified. Default the script does not break the action run. [supported Severities: Info, Low, Medium, High, Critical]'
+    required: false
+
+runs:
+  using: docker
+  image: docker://public.ecr.aws/l6c8c5q3/codegurusecurity-actions-public:latest
+  args:
+    - --source_path
+    - ${{ inputs.source_path }}
+    - --aws_region
+    - ${{ inputs.aws_region }}
+    - --output_file_prefix
+    - codeguru-security-results
+    - --output_format
+    - SARIF
+    - --fail_on_severity
+    - ${{ inputs.fail_on_severity }}

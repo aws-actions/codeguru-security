@@ -1,0 +1,35 @@
+Parameters:
+  Repository:
+    Type : "String"
+    Description : "You can pass specific repository with specific branch or you can enable with org using wildcard. for example: octo-org/octo-repo:* allow repo octo-repo with octo org and all branches."
+
+Resources:
+  GitHubProvider:
+    Type: AWS::IAM::OIDCProvider
+    Properties:
+      ClientIdList:
+        - sts.amazonaws.com
+      ThumbprintList:
+        - '6938fd4d98bab03faadb97b34396831e3780aea1'
+      Url: 'https://token.actions.githubusercontent.com'
+
+  CodeGuruSecurityGitHubAccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - 'sts:AssumeRoleWithWebIdentity'
+            Effect: Allow
+            Principal:
+              Federated: !Ref GitHubProvider
+            Condition:
+              StringEquals:
+                'token.actions.githubusercontent.com:aud' : sts.amazonaws.com
+              StringLike:
+                'token.actions.githubusercontent.com:sub': !Sub "repo:${Repository}"
+      Description: 'Role for access codeguru-security from github'
+      MaxSessionDuration: 3600
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonCodeGuruSecurityScanAccess
+      RoleName: 'CodeGuruSecurityGitHubAccessRole'
