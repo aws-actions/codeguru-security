@@ -12,7 +12,7 @@ inputs:
     description: 'AWS region where you want to run workflow'
     required: true
   fail_on_severity:
-    description: 'Fails the action run if any finding is higher than or equal to severity is identified. Default the script does not break the action run. [supported Severities: Info, Low, Medium, High, Critical]'
+    description: 'Fails the action run if any finding is higher than or equal to severity is identified. Default the script does not break the action run. [example: Info, Low, Medium, High, Critical]'
     required: false
 
 runs:
