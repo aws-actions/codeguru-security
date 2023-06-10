@@ -25,7 +25,7 @@ runs:
     - ${{ inputs.aws_region }}
     - --output_file_prefix
     - codeguru-security-results
-    - --output_file_forma
+    - --output_file_format
     - SARIF
     - --fail_on_severity
     - ${{ inputs.fail_on_severity }}
