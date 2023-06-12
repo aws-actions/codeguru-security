@@ -14,34 +14,37 @@ To add CodeGuru Security to your CI/CD pipeline, follow the steps under the *Usa
 
 * **Add checkout to your workflow:**
 
-For CodeGuru Security to run, check out your repository using [actions/checkout@v2](https://github.com/actions/checkout). **You will need to set fetch-depth: 0 to fetch all history for all branches and tags.** For example:
+For CodeGuru Security to run, check out your repository using [actions/checkout@v3](https://github.com/actions/checkout). **You will need to set fetch-depth: 0 to fetch all history for all branches and tags.** For example:
 
 ```
 - name: Checkout repository
-  uses: actions/checkout@v2
+  uses: actions/checkout@v3
   with:
     fetch-depth: 0 # This is a required field for CodeGuru
 ```
 
 * **Provide your AWS Credentials:**
 
-We recommend following the instructions and using [aws-actions/configure-aws-credentials](https://github.com/aws-actions/configure-aws-credentials) to configure your credentials for a job. The IAM user or IAM role requires [AmazonCodeGuruSecurityFullAccess](<url place holder>) policy.  The CodeGuru Security action supports credentials from GitHub hosted runners and self-hosted runners.
+We recommend following the instructions and using [aws-actions/configure-aws-credentials](https://github.com/aws-actions/configure-aws-credentials) to configure your credentials for a job. The IAM user or IAM role requires [AmazonCodeGuruSecurityScanAccess](<url place holder>) policy. The CodeGuru Security action supports credentials from GitHub hosted runners and self-hosted runners.
 
 **Step 2: Add Amazon CodeGuru Security Action**
 
-The source_path is assumed to be the root of the repository (e.g. ".").
-
 Input Parameters:
+
+* source_path: **Required**. The source_path is assumed to be the root of the repository (e.g. ".").
 
 * aws_region: **Required**. AWS region where you want to run workflow.
 
+* fail_on_severity: Fails the action run if any finding is higher than or equal to severity is provided. Default the script does not break the action run. [example: Info, Low, Medium, High, Critical]'
+
 ```
 - name: CodeGuru Security
-  uses: aws-actions/codeguru-security@v1.0 # to do replace this after action release
+  uses: aws-actions/codeguru-security@v1
   with:
     source_path: .
-    aws_region: us-east-1
-- name: print findings.
+    aws_region: eu-north-1
+    fail_on_severity: Critical # Critical findings will fail the build
+- name: Print findings
   run: |
     ls -l
     cat codeguru-security-results.sarif.json
