@@ -11,6 +11,10 @@ inputs:
   aws_region:
     description: 'AWS region where you want to run workflow'
     required: true
+  scan_name:
+    description: 'The name of the scan'
+    default: ${{ github.event.repository.name }}
+    required: false
   fail_on_severity:
     description: 'Fails the action run if any finding is higher than or equal to severity is provided. Default the script does not break the action run. [example: Info, Low, Medium, High, Critical]'
     required: false
@@ -23,6 +27,8 @@ runs:
     - ${{ inputs.source_path }}
     - --aws_region
     - ${{ inputs.aws_region }}
+    - --scan_name
+    - ${{ inputs.scan_name }}
     - --output_file_prefix
     - codeguru-security-results
     - --output_file_format
