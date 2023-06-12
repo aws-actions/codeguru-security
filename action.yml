@@ -13,8 +13,8 @@ inputs:
     required: true
   scan_name:
     description: 'The name of the scan'
-    default: ${{ github.event.repository.name }}
-    required: false
+    default: CGS-Github-${{ github.event.repository.name }}
+    required: true
   fail_on_severity:
     description: 'Fails the action run if any finding is higher than or equal to severity is provided. Default the script does not break the action run. [example: Info, Low, Medium, High, Critical]'
     required: false
