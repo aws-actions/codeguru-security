@@ -25,7 +25,7 @@ For CodeGuru Security to run, check out your repository using [actions/checkout@
 
 * **Provide your AWS Credentials:**
 
-We recommend following the instructions and using [aws-actions/configure-aws-credentials](https://github.com/aws-actions/configure-aws-credentials) to configure your credentials for a job. The IAM user or IAM role requires [AmazonCodeGuruSecurityScanAccess](<url place holder>) policy. The CodeGuru Security action supports credentials from GitHub hosted runners and self-hosted runners.
+We recommend following the instructions and using [aws-actions/configure-aws-credentials](https://github.com/aws-actions/configure-aws-credentials) to configure your credentials for a job. The IAM user or IAM role requires [AmazonCodeGuruSecurityScanAccess](https://docs.aws.amazon.com/codeguru/latest/security-ug/security-iam-awsmanpol.html#security-iam-awsmanpol-AmazonCodeGuruSecurityScanAccess) policy. The CodeGuru Security action supports credentials from GitHub hosted runners and self-hosted runners.
 
 **Step 2: Add Amazon CodeGuru Security Action**
 
