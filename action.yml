@@ -15,6 +15,9 @@ inputs:
     description: 'The name of the scan'
     default: CGS-Github-${{ github.event.repository.name }}
     required: true
+  analysis_type:
+    description: 'The type of analysis you want CodeGuru Security to perform in the scan, either Security or All. Defaults to Security type if missing.'
+    required: false  
   fail_on_severity:
     description: 'Fails the action run if any finding is higher than or equal to severity is provided. Default the script does not break the action run. [example: Info, Low, Medium, High, Critical]'
     required: false
@@ -33,5 +36,7 @@ runs:
     - codeguru-security-results
     - --output_file_format
     - SARIF
+    - --analysis_type
+    - ${{ inputs.analysis_type }}
     - --fail_on_severity
     - ${{ inputs.fail_on_severity }}
